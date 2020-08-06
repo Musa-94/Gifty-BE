@@ -1,10 +1,26 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post, Request, Response } from '@nestjs/common';
+import { ModelController } from '../model/model.controller';
 
-@Controller()
+@Controller('users')
 export class AppController {
-
-    @Get()
+    constructor(public modelController: ModelController) {}
+    @Get('gift')
     getGift(): string {
         return 'GIFT';
+    }
+
+    @Post('addNewUser')
+    setNewUser(@Request() body): void {
+        this.modelController.addUser(body.body);
+    }
+
+    @Post('checkUser')
+    checkRegUser(@Request() body): boolean {
+        return this.modelController.checkUser(body);
+    }
+
+    @Get('getUsers')
+    getAllUsers(): object[] {
+        return this.modelController.getAllUsers();
     }
 }
