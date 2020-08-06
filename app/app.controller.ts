@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Request, Response } from '@nestjs/common';
 import { ModelController } from '../model/model.controller';
 
-@Controller('users')
+@Controller()
 export class AppController {
     constructor(public modelController: ModelController) {}
-    @Get('gift')
+    @Get()
     getGift(): string {
         return 'GIFT';
     }
