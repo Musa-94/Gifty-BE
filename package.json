@@ -4,6 +4,7 @@
   "description": "back-end",
   "main": "index.js",
   "scripts": {
+    "deploy": "gh-pages -d dist",
     "start": "node ./init.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,9 +20,10 @@
   "bugs": {
     "url": "https://github.com/Musa-94/Gifty-BE/issues"
   },
-  "homepage": "https://github.com/Musa-94/Gifty-BE#readme",
+  "homepage": "https://musa-94.github.io/Gifty-BE/",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "gh-pages": "^3.1.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
