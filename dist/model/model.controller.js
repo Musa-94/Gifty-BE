@@ -6,10 +6,15 @@ class ModelController {
         this.regUsers = [];
     }
     addUser(user) {
-        !this.checkUser(user) && this.regUsers.push(user);
+        this.checkInfoUser(user)
+            && !this.isRegisteredUser(user)
+            && this.regUsers.push(user);
     }
-    checkUser(currentUser) {
+    isRegisteredUser(currentUser) {
         return this.regUsers.some(user => currentUser.phoneNumber === user.phoneNumber);
+    }
+    checkInfoUser(currentUser) {
+        return !!currentUser.phoneNumber;
     }
     getAllUsers() {
         return this.regUsers;
