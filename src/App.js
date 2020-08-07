@@ -30,9 +30,10 @@ class App {
 
     onCheckUser = (request, response) => {
         const { body } = request;
-        const check = this._model.checkUser(body)
+        const check = this._model.isRegisteredUser(body);
 
-        response.end(check);
+        response.json(check);
+        response.end();
     }
 
     getApp = () => {

@@ -4,11 +4,17 @@ class Model {
     }
 
     addUser(user) {
-        !this.checkUser(user) && this.regUsers.push(user);
+        this.checkUserInformation(user)
+            && !this.isRegisteredUser(user)
+            && this.regUsers.push(user);
     }
 
-    checkUser(currentUser) {
+    isRegisteredUser(currentUser) {
         return this.regUsers.some(user => currentUser.phoneNumber === user.phoneNumber);
+    }
+
+    checkUserInformation(currentUser) {
+        return currentUser.phoneNumber;
     }
 
     getAllUsers() {
