@@ -26,7 +26,7 @@ let AppController = class AppController {
         this.modelController.addUser(body.body);
     }
     checkRegUser(body) {
-        return this.modelController.checkUser(body);
+        return this.modelController.isRegisteredUser(body);
     }
     getAllUsers() {
         return this.modelController.getAllUsers();

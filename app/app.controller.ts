@@ -16,7 +16,7 @@ export class AppController {
 
     @Post('checkUser')
     checkRegUser(@Request() body): boolean {
-        return this.modelController.checkUser(body);
+        return this.modelController.isRegisteredUser(body);
     }
 
     @Get('getUsers')
