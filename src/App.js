@@ -1,6 +1,8 @@
-const express = require('express');
 const path = require('path');
-const Model = require('./Model')
+const express = require('express');
+
+const Model = require('./Model');
+const fileSystem = require('./fileSytem');
 
 class App {
     constructor() {
@@ -8,10 +10,12 @@ class App {
         this._app.use(express.json());
         this._app.use(express.static(path.resolve(__dirname, '../dist')));
         this._model = new Model();
+        this._fs = new fileSystem();
 
         this._app.get('/getUsers', this.onGetAllUsers);
         this._app.post('/addNewUser', this.onAddUser);
         this._app.post('/checkUser', this.onCheckUser);
+        this._app.post('/addNewAnswer', this.addNewAnswer);
     }
 
     onGetAllUsers = (request, response) => {
@@ -19,7 +23,7 @@ class App {
 
         response.json(allUsers);
         response.end();
-    }
+    };
 
     onAddUser = (request, response) => {
         const { body } = request;
@@ -27,7 +31,7 @@ class App {
 
         response.json(isAddedNewUser);
         response.end();
-    }
+    };
 
     onCheckUser = (request, response) => {
         const { body } = request;
@@ -35,11 +39,20 @@ class App {
 
         response.json(check);
         response.end();
-    }
+    };
 
-    getApp = () => {
-        return this._app;
-    }
+    addNewAnswer = async (request, response) => {
+        const { body } = request;
+
+        const normalizeAnswer = await this._fs.readCurrentAnswers(JSON.stringify(body));
+
+        const isCreateFile = this._fs.createFile(normalizeAnswer);
+
+        response.json(isCreateFile);
+        response.end();
+    };
+
+    getApp = () => this._app;
 }
 
 module.exports = App;
