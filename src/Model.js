@@ -4,9 +4,10 @@ class Model {
     }
 
     addUser(user) {
-        this.checkUserInformation(user)
+        return this.checkUserInformation(user)
             && !this.isRegisteredUser(user)
-            && this.regUsers.push(user);
+                && this.regUsers.push(user)
+                    && true;
     }
 
     isRegisteredUser(currentUser) {
@@ -14,7 +15,7 @@ class Model {
     }
 
     checkUserInformation(currentUser) {
-        return currentUser.phoneNumber;
+        return !!currentUser.phoneNumber;
     }
 
     getAllUsers() {

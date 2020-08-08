@@ -23,8 +23,9 @@ class App {
 
     onAddUser = (request, response) => {
         const { body } = request;
-        this._model.addUser(body)
+        const isAddedNewUser = this._model.addUser(body);
 
+        response.json(isAddedNewUser);
         response.end();
     }
 
