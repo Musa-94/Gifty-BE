@@ -1,1 +1,1 @@
-web: node ./dist/app/main.js
+web: nest start
