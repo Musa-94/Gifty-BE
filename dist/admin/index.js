@@ -110,8 +110,8 @@ var answerRight = document.getElementById('answerRight');
 var imageURL = document.getElementById('imageURL');
 var saveButton = document.getElementById('saveQuestion');
 // CONCATENATED MODULE: ./src/REST/REST.js
-function sendQuestion(question, cb) {
-  var url = "".concat(window.location.href, "addNewAnswer");
+function sendQuestion(question) {
+  var url = "".concat(window.location.href, "addNewQuestion");
   fetch(url, {
     method: 'POST',
     headers: {

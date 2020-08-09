@@ -15,6 +15,7 @@ class App {
         this._app.get('/getUsers', this.onGetAllUsers);
         this._app.get('/getQuestions', this.onGetQuestions);
         this._app.get('/admin', this.onGetAdminPanel);
+
         this._app.post('/addNewUser', this.onAddUser);
         this._app.post('/checkUser', this.onCheckUser);
         this._app.post('/admin/addNewQuestion', this.addNewQuestion);
