@@ -13,10 +13,11 @@ class App {
         this._fs = new fileSystem();
 
         this._app.get('/getUsers', this.onGetAllUsers);
+        this._app.get('/getQuestions', this.onGetQuestions);
         this._app.get('/admin', this.onGetAdminPanel);
         this._app.post('/addNewUser', this.onAddUser);
         this._app.post('/checkUser', this.onCheckUser);
-        this._app.post('/admin/addNewAnswer', this.addNewAnswer);
+        this._app.post('/admin/addNewQuestion', this.addNewQuestion);
     }
 
     onGetAllUsers = (request, response) => {
@@ -29,6 +30,13 @@ class App {
     onGetAdminPanel = (request, response) => {
         this._app.use(express.static(path.resolve(__dirname, '../dist/admin')));
 
+        response.end();
+    };
+
+    onGetQuestions = (request, response) => {
+        const questions = require('../dataJson/questions.json');
+
+        response.json(questions);
         response.end();
     };
 
@@ -48,12 +56,12 @@ class App {
         response.end();
     };
 
-    addNewAnswer = async (request, response) => {
+    addNewQuestion = async (request, response) => {
         const { body } = request;
 
-        const normalizeAnswer = await this._fs.readCurrentAnswers(JSON.stringify(body));
+        const normalizeQuestions = await this._fs.readCurrentQuestions(JSON.stringify(body));
 
-        const isCreateFile = this._fs.createFile(normalizeAnswer);
+        const isCreateFile = this._fs.createFile(normalizeQuestions);
 
         response.json(isCreateFile);
         response.end();

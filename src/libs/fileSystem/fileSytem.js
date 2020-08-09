@@ -3,8 +3,8 @@ const path = require('path');
 
 class fileSystem {
 
-    createFile = normalizeAnswer => {
-        fs.writeFile(path.resolve(__dirname, '../../../dataJson/questions.json'), normalizeAnswer,function (err) {
+    createFile = questions => {
+        fs.writeFile(path.resolve(__dirname, '../../../dataJson/questions.json'), questions,function (err) {
             if(err) {
                 return false;
             }
@@ -15,38 +15,38 @@ class fileSystem {
         return true;
     };
 
-    answersNormalize = newAnswer => {
-        let normalizeAnswer = '';
+    questionNormalize = newQuestion => {
+        let normalizeQuestions = '';
 
-        for (let letterIndex = 0; letterIndex < newAnswer.length; letterIndex++) {
-            if (newAnswer[letterIndex] === `}` || newAnswer[letterIndex - 1] === `{` || newAnswer[letterIndex - 1] === '[' || newAnswer[letterIndex - 1] === ',') {
-                normalizeAnswer += `\n\t`;
+        for (let letterIndex = 0; letterIndex < newQuestion.length; letterIndex++) {
+            if (newQuestion[letterIndex] === `}` || newQuestion[letterIndex - 1] === `{` || newQuestion[letterIndex - 1] === '[' || newQuestion[letterIndex - 1] === ',') {
+                normalizeQuestions += `\n\t`;
             }
 
-            if ( newAnswer[letterIndex - 1] === `{` || (newAnswer[letterIndex - 1] === ',' && newAnswer[letterIndex - 2] === '"')) {
-                normalizeAnswer += `\t\t`;
+            if ( newQuestion[letterIndex - 1] === `{` || (newQuestion[letterIndex - 1] === ',' && newQuestion[letterIndex - 2] === '"')) {
+                normalizeQuestions += `\t\t`;
             }
 
-            normalizeAnswer += newAnswer[letterIndex];
+            normalizeQuestions += newQuestion[letterIndex];
         }
-        normalizeAnswer += '\n]';
+        normalizeQuestions += '\n]';
 
-        return normalizeAnswer;
+        return normalizeQuestions;
     };
 
-    readCurrentAnswers = newAnswer => {
-        this.newAnswer = newAnswer;
-        const answers = require('../../../dataJson/questions.json');
-        const stringifyAnswer = JSON.stringify(answers);
-        const isEmpty = stringifyAnswer === '[]';
-        const currentAnswersWithoutCloseArray = stringifyAnswer.slice(0, stringifyAnswer.length - 1);
+    readCurrentQuestions = newQuestion => {
+        this.newQuestion = newQuestion;
+        const questions = require('../../../dataJson/questions.json');
+        const stringifyQuestion = JSON.stringify(questions);
+        const isEmpty = stringifyQuestion === '[]';
+        const currentQuestionWithoutCloseArray = stringifyQuestion.slice(0, stringifyQuestion.length - 1);
 
-        const concatAnswers = this.concatCurrentAndNewAnswers(currentAnswersWithoutCloseArray, this.newAnswer, isEmpty);
+        const concatQuestion = this.concatCurrentAndNewQuestion(currentQuestionWithoutCloseArray, this.newQuestion, isEmpty);
 
-        return this.answersNormalize(concatAnswers)
+        return this.questionNormalize(concatQuestion)
     };
 
-    concatCurrentAndNewAnswers = (currentAnswers, newAnswer, isEmpty) => isEmpty ? `${currentAnswers}${newAnswer}` : `${currentAnswers},${newAnswer}`;
+    concatCurrentAndNewQuestion = (currentQuestion, newQuestion, isEmpty) => isEmpty ? `${currentQuestion}${newQuestion}` : `${currentQuestion},${newQuestion}`;
 }
 
 module.exports = fileSystem;
