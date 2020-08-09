@@ -2,7 +2,7 @@ const path = require('path');
 const express = require('express');
 
 const Model = require('./Model');
-const fileSystem = require('./fileSytem');
+const fileSystem = require('./libs/fileSystem/fileSytem');
 
 class App {
     constructor() {
@@ -13,15 +13,22 @@ class App {
         this._fs = new fileSystem();
 
         this._app.get('/getUsers', this.onGetAllUsers);
+        this._app.get('/admin', this.onGetAdminPanel);
         this._app.post('/addNewUser', this.onAddUser);
         this._app.post('/checkUser', this.onCheckUser);
-        this._app.post('/addNewAnswer', this.addNewAnswer);
+        this._app.post('/admin/addNewAnswer', this.addNewAnswer);
     }
 
     onGetAllUsers = (request, response) => {
         const allUsers = this._model.getAllUsers();
 
         response.json(allUsers);
+        response.end();
+    };
+
+    onGetAdminPanel = (request, response) => {
+        this._app.use(express.static(path.resolve(__dirname, '../dist/admin')));
+
         response.end();
     };
 

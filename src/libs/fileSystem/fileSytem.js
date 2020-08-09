@@ -4,12 +4,12 @@ const path = require('path');
 class fileSystem {
 
     createFile = normalizeAnswer => {
-        fs.writeFile(path.resolve(__dirname, '../dataJson/answers.json'), normalizeAnswer,function (err) {
+        fs.writeFile(path.resolve(__dirname, '../../../dataJson/questions.json'), normalizeAnswer,function (err) {
             if(err) {
                 return false;
             }
 
-            console.log('Add new answer');
+            console.log('NEW QUESTION ADDED');
         });
 
         return true;
@@ -36,7 +36,7 @@ class fileSystem {
 
     readCurrentAnswers = newAnswer => {
         this.newAnswer = newAnswer;
-        const answers = require('../dataJson/answers.json');
+        const answers = require('../../../dataJson/questions.json');
         const stringifyAnswer = JSON.stringify(answers);
         const isEmpty = stringifyAnswer === '[]';
         const currentAnswersWithoutCloseArray = stringifyAnswer.slice(0, stringifyAnswer.length - 1);
