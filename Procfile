@@ -1,1 +1,1 @@
-web: node ./init.js
+web: nodemon ./init.js

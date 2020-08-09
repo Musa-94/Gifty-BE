@@ -2,7 +2,7 @@ const path = require('path');
 const express = require('express');
 
 const Model = require('./Model');
-const fileSystem = require('./libs/fileSystem/fileSytem');
+const fileSystem = require(path.resolve(__dirname, './libs/fileSystem/fileSystem'));
 
 class App {
     constructor() {
@@ -35,8 +35,7 @@ class App {
     };
 
     onGetQuestions = (request, response) => {
-        this._app.use(express.static(path.resolve(__dirname, '../dist')));
-        const questions = require('../dataJson/questions.json');
+        const questions = require(path.resolve(__dirname, '../dataJson/questions.json'));
 
         response.json(questions);
         response.end();
@@ -60,7 +59,6 @@ class App {
 
     addNewQuestion = async (request, response) => {
         const { body } = request;
-
         const normalizeQuestions = await this._fs.readCurrentQuestions(JSON.stringify(body));
 
         const isCreateFile = this._fs.createFile(normalizeQuestions);
