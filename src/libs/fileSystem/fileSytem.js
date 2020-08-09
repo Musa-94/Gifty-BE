@@ -37,6 +37,7 @@ class fileSystem {
     readCurrentQuestions = newQuestion => {
         this.newQuestion = newQuestion;
         const questions = require('../../../dataJson/questions.json');
+
         const stringifyQuestion = JSON.stringify(questions);
         const isEmpty = stringifyQuestion === '[]';
         const currentQuestionWithoutCloseArray = stringifyQuestion.slice(0, stringifyQuestion.length - 1);

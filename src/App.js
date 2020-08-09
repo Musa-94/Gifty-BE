@@ -35,6 +35,7 @@ class App {
     };
 
     onGetQuestions = (request, response) => {
+        this._app.use(express.static(path.resolve(__dirname, '../dist')));
         const questions = require('../dataJson/questions.json');
 
         response.json(questions);
