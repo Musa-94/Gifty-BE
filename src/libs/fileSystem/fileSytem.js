@@ -36,7 +36,7 @@ class fileSystem {
 
     readCurrentQuestions = newQuestion => {
         this.newQuestion = newQuestion;
-        const questions = require('../../../dataJson/questions.json');
+        const questions = require(path.resolve(__dirname,'../../../dataJson/questions.json'));
 
         const stringifyQuestion = JSON.stringify(questions);
         const isEmpty = stringifyQuestion === '[]';
