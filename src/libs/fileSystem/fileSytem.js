@@ -4,7 +4,7 @@ const path = require('path');
 class fileSystem {
 
     createFile = questions => {
-        fs.writeFile(path.resolve(__dirname, '../../../dataJson/questions.json'), questions,function (err) {
+        fs.writeFile((__dirname, '../../../dataJson/questions.json'), questions,function (err) {
             if(err) {
                 return false;
             }
@@ -36,7 +36,7 @@ class fileSystem {
 
     readCurrentQuestions = newQuestion => {
         this.newQuestion = newQuestion;
-        const questions = require(path.resolve(__dirname,'../../../dataJson/questions.json'));
+        const questions = require((__dirname,'../../../dataJson/questions.json'));
 
         const stringifyQuestion = JSON.stringify(questions);
         const isEmpty = stringifyQuestion === '[]';
