@@ -36,7 +36,7 @@ class App {
 
         const mailOptions = {
             from: 'gifty.team@mail.ru',
-            to: ['farida.osm@gmail.com', 'mc.zakvak@gmail.com'],
+            to: ['farida.osm@gmail.com', 'mc.zakvak@gmail.com', 'farkhad.jafarov96@gmail.com'],
             subject: 'GIFT GAME',
             text: JSON.stringify(questions),
         };
