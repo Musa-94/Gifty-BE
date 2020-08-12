@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 
 const Model = require('./Model');
+const Nodemailer = require('./libs/sendMail/sendMail');
 const fileSystem = require(path.resolve(__dirname, './libs/fileSystem/fileSystem'));
 
 class App {
@@ -9,12 +10,14 @@ class App {
         this._app = express();
         this._app.use(express.json());
         this._app.use(express.static(path.resolve(__dirname, '../dist')));
+
         this._model = new Model();
         this._fs = new fileSystem();
+        this._mailer = new Nodemailer();
 
         this._app.get('/getUsers', this.onGetAllUsers);
         this._app.get('/getQuestions', this.onGetQuestions);
-        this._app.get('/admin', this.onGetAdminPanel);
+        this._app.get('/admin/sendQuestionsToMail', this.sendQuestionsToMail);
 
         this._app.post('/addNewUser', this.onAddUser);
         this._app.post('/checkUser', this.onCheckUser);
@@ -28,8 +31,17 @@ class App {
         response.end();
     };
 
-    onGetAdminPanel = (request, response) => {
-        this._app.use(express.static(path.resolve(__dirname, '../dist/admin')));
+    sendQuestionsToMail = (request, response) => {
+        const questions = require('../dataJson/questions.json');
+
+        const mailOptions = {
+            from: 'gifty.team@mail.ru',
+            to: ['farida.osm@gmail.com', 'mc.zakvak@gmail.com'],
+            subject: 'GIFT GAME',
+            text: JSON.stringify(questions),
+        };
+
+        this._mailer.sendMail(mailOptions);
 
         response.end();
     };

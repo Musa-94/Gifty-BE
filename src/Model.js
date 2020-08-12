@@ -11,7 +11,7 @@ class Model {
     }
 
     isRegisteredUser(currentUser) {
-        return this.regUsers.some(user => currentUser.phoneNumber === user.phoneNumber);
+        return this.regUsers.find(user => currentUser.phoneNumber === user.phoneNumber);
     }
 
     checkUserInformation(currentUser) {
