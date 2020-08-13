@@ -15,24 +15,24 @@ class fileSystem {
         return true;
     };
 
-    questionNormalize = newQuestion => {
-        let normalizeQuestions = '';
-
-        for (let letterIndex = 0; letterIndex < newQuestion.length; letterIndex++) {
-            if (newQuestion[letterIndex] === `}` || newQuestion[letterIndex - 1] === `{` || newQuestion[letterIndex - 1] === '[' || newQuestion[letterIndex - 1] === ',') {
-                normalizeQuestions += `\n\t`;
-            }
-
-            if ( newQuestion[letterIndex - 1] === `{` || (newQuestion[letterIndex - 1] === ',' && newQuestion[letterIndex - 2] === '"')) {
-                normalizeQuestions += `\t\t`;
-            }
-
-            normalizeQuestions += newQuestion[letterIndex];
-        }
-        normalizeQuestions += '\n]';
-
-        return normalizeQuestions;
-    };
+    // questionNormalize = newQuestion => { //в будующем доработать
+    //     let normalizeQuestions = '';
+    //
+    //     for (let letterIndex = 0; letterIndex < newQuestion.length; letterIndex++) {
+    //         if (newQuestion[letterIndex] === `}` || newQuestion[letterIndex - 1] === `{` || newQuestion[letterIndex - 1] === '[' || newQuestion[letterIndex - 1] === ',') {
+    //             normalizeQuestions += `\n\t`;
+    //         }
+    //
+    //         if ( newQuestion[letterIndex - 1] === `{` || (newQuestion[letterIndex - 1] === ',' && newQuestion[letterIndex - 2] === '"')) {
+    //             normalizeQuestions += `\t\t`;
+    //         }
+    //
+    //         normalizeQuestions += newQuestion[letterIndex];
+    //     }
+    //     normalizeQuestions += '\n]';
+    //
+    //     return normalizeQuestions;
+    // };
 
     readCurrentQuestions = newQuestion => {
         this.newQuestion = newQuestion;
@@ -44,10 +44,10 @@ class fileSystem {
 
         const concatQuestions = this.concatCurrentAndNewQuestion(currentQuestionWithoutCloseArray, this.newQuestion, isEmpty);
 
-        return this.questionNormalize(concatQuestions)
+        return concatQuestions
     };
 
-    concatCurrentAndNewQuestion = (currentQuestion, newQuestion, isEmpty) => isEmpty ? `${currentQuestion}${newQuestion}` : `${currentQuestion},${newQuestion}`;
+    concatCurrentAndNewQuestion = (currentQuestion, newQuestion, isEmpty) => isEmpty ? `${currentQuestion}${newQuestion}]` : `${currentQuestion},${newQuestion}]`;
 }
 
 module.exports = fileSystem;

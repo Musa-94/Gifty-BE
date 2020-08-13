@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 
 const Model = require('./Model');
+const Controller = require('./Controller');
 const Nodemailer = require('./libs/sendMail/sendMail');
 const fileSystem = require(path.resolve(__dirname, './libs/fileSystem/fileSystem'));
 
@@ -12,6 +13,7 @@ class App {
         this._app.use(express.static(path.resolve(__dirname, '../dist')));
 
         this._model = new Model();
+        this._controller = new Controller(this._model);
         this._fs = new fileSystem();
         this._mailer = new Nodemailer();
 
@@ -19,8 +21,9 @@ class App {
         this._app.get('/getQuestions', this.onGetQuestions);
         this._app.get('/admin/sendQuestionsToMail', this.sendQuestionsToMail);
 
-        this._app.post('/addNewUser', this.onAddUser);
         this._app.post('/checkUser', this.onCheckUser);
+        this._app.post('/addNewUser', this.onAddUser);
+        this._app.post('/getTwelveQuestions', this.onGetTwelveQuestions);
         this._app.post('/admin/addNewQuestion', this.addNewQuestion);
     }
 
@@ -53,9 +56,23 @@ class App {
         response.end();
     };
 
+    onGetTwelveQuestions = (request, response) => {
+        const questions = require(path.resolve(__dirname, '../dataJson/questions.json'));
+        const { body } = request;
+
+        const idUserUsedQuestions = this._model.getUserUsedQuestions(body);
+        const unusedQuestions = this._controller.getUnusedQuestion(questions, idUserUsedQuestions)
+        const twelveQuestion = this._controller.getTwelveQuestions(unusedQuestions);
+        const updateIdUserUsedQuestions = this._controller.saveUserQuestionsId(twelveQuestion, idUserUsedQuestions);
+        this._model.updateIdUserUsedQuestions(body, updateIdUserUsedQuestions)
+
+        twelveQuestion && response.json(twelveQuestion);
+        response.end();
+    };
+
     onAddUser = (request, response) => {
         const { body } = request;
-        const isAddedNewUser = this._model.addUser(body);
+        const isAddedNewUser = this._model.addUser(body); //переместить логику в контроллер
 
         response.json(isAddedNewUser);
         response.end();
