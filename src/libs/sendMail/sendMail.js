@@ -4,11 +4,11 @@ class Nodemailer {
     constructor(service, auth) {
         this._service = service || 'mail';
         this._auth = auth || {
-            user: 'gifty.team@mail.ru',
-            pass: '%S?~x@32MKSj$q8',
+            user: process.env.AUTH_MAIL,
+            pass: process.env.AUTH_MAIL_PASS,
         };
         this._mailOptions = {
-            from: 'gifty.team@mail.ru',
+            from: process.env.AUTH_MAIL,
             to: 'mc.zakvak@gmail.com',
             subject: 'GIFT GAME',
             text: 'WELCOME GIFT',
