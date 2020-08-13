@@ -6,8 +6,7 @@ class Model {
     addUser(user) {
         return this.checkUserInformation(user)
             && !this.isRegisteredUser(user)
-                && this.regUsers.push(user)
-                    && true;
+                && !!this.regUsers.push(user)
     }
 
     isRegisteredUser(currentUser) {

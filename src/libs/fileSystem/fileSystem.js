@@ -42,9 +42,9 @@ class fileSystem {
         const isEmpty = stringifyQuestion === '[]';
         const currentQuestionWithoutCloseArray = stringifyQuestion.slice(0, stringifyQuestion.length - 1);
 
-        const concatQuestion = this.concatCurrentAndNewQuestion(currentQuestionWithoutCloseArray, this.newQuestion, isEmpty);
+        const concatQuestions = this.concatCurrentAndNewQuestion(currentQuestionWithoutCloseArray, this.newQuestion, isEmpty);
 
-        return this.questionNormalize(concatQuestion)
+        return this.questionNormalize(concatQuestions)
     };
 
     concatCurrentAndNewQuestion = (currentQuestion, newQuestion, isEmpty) => isEmpty ? `${currentQuestion}${newQuestion}` : `${currentQuestion},${newQuestion}`;

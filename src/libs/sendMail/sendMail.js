@@ -5,7 +5,7 @@ class Nodemailer {
         this._service = service || 'mail';
         this._auth = auth || {
             user: 'gifty.team@mail.ru',
-            pass: '%Y_4_^rURDsqtD!',
+            pass: '%S?~x@32MKSj$q8',
         };
         this._mailOptions = {
             from: 'gifty.team@mail.ru',
