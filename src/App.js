@@ -61,12 +61,13 @@ class App {
         const { body } = request;
 
         const idUserUsedQuestions = this._model.getUserUsedQuestions(body);
+
         const unusedQuestions = this._controller.getUnusedQuestion(questions, idUserUsedQuestions)
         const twelveQuestion = this._controller.getTwelveQuestions(unusedQuestions);
         const updateIdUserUsedQuestions = this._controller.saveUserQuestionsId(twelveQuestion, idUserUsedQuestions);
-        this._model.updateIdUserUsedQuestions(body, updateIdUserUsedQuestions)
+        this._model.updateIdUserUsedQuestions(body, updateIdUserUsedQuestions);
 
-        twelveQuestion && response.json(twelveQuestion);
+        response.json(twelveQuestion);
         response.end();
     };
 
