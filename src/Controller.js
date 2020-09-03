@@ -15,7 +15,7 @@ class Controller {
         }
 
         return question;
-    }
+    };
 
     getTwelveQuestions = questions => {
         const questionsRandomize = this.questionsSortRandomize(questions)
@@ -25,13 +25,13 @@ class Controller {
         const twelveQuestions = questionsRandomize.slice(indexStart, indexEnd);
 
         return twelveQuestions.length < 12 ? questionsRandomize.slice(indexEnd, indexEnd + (12 - twelveQuestions.length)) : twelveQuestions;
-    }
+    };
 
     saveUserQuestionsId = (saveQuestions, idUsedQuestions) => {
         saveQuestions.forEach(question => idUsedQuestions.push(question.qid))
 
         return idUsedQuestions
-    }
+    };
 }
 
 module.exports = Controller;

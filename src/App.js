@@ -21,16 +21,70 @@ class App {
         this._app.get('/getQuestions', this.onGetQuestions);
         this._app.get('/admin/sendQuestionsToMail', this.sendQuestionsToMail);
 
+        this._app.post('/getHistoryScore', this.onGetHistoryScore);
+        this._app.post('/checkAdminCredentials', this.onCheckAdminCredentials);
         this._app.post('/checkUser', this.onCheckUser);
         this._app.post('/addNewUser', this.onAddUser);
         this._app.post('/getTwelveQuestions', this.onGetTwelveQuestions);
         this._app.post('/admin/addNewQuestion', this.addNewQuestion);
+        this._app.put('/updateHistoryScore', this.updateHistoryScore);
     }
+
+    onCheckAdminCredentials = (req, res) => {
+        const { body } = req;
+
+        const isValidAdminCredentials = this._model.checkValidAdminCredential(body);
+        console.log('isValidAdminCredentials:', isValidAdminCredentials);
+
+        if (isValidAdminCredentials) {
+            res.redirect('/#/admin');
+        }
+
+        res.end();
+    };
+
+    updateHistoryScore = (requset, response) => {
+        const { body } = requset;
+
+        this._model.updateHistoryScore(body);
+    };
 
     onGetAllUsers = (request, response) => {
         const allUsers = this._model.getAllUsers();
 
         response.json(allUsers);
+        response.end();
+    };
+
+    onGetQuestions = (request, response) => {
+        const questions = require(path.resolve(__dirname, '../dataJson/questions.json'));
+
+        response.json(questions);
+        response.end();
+    };
+
+    onGetHistoryScore = (request, response) => {
+        const { body: phoneNumber } = request;
+
+        const historyScore = this._model.getUserHistoryScore(phoneNumber);
+        console.log('historyScore', historyScore);
+
+        response.json(historyScore);
+        response.end();
+    }
+
+    onGetTwelveQuestions = (request, response) => {
+        const questions = require(path.resolve(__dirname, '../dataJson/questions.json'));
+        const { body } = request;
+
+        const idUserUsedQuestions = this._model.getUserUsedQuestions(body);
+
+        const unusedQuestions = this._controller.getUnusedQuestion(questions, idUserUsedQuestions)
+        const twelveQuestion = this._controller.getTwelveQuestions(unusedQuestions);
+        const updateIdUserUsedQuestions = this._controller.saveUserQuestionsId(twelveQuestion, idUserUsedQuestions);
+        this._model.updateIdUserUsedQuestions(body, updateIdUserUsedQuestions);
+
+        response.json(twelveQuestion);
         response.end();
     };
 
@@ -49,28 +103,6 @@ class App {
         response.end();
     };
 
-    onGetQuestions = (request, response) => {
-        const questions = require(path.resolve(__dirname, '../dataJson/questions.json'));
-
-        response.json(questions);
-        response.end();
-    };
-
-    onGetTwelveQuestions = (request, response) => {
-        const questions = require(path.resolve(__dirname, '../dataJson/questions.json'));
-        const { body } = request;
-
-        const idUserUsedQuestions = this._model.getUserUsedQuestions(body);
-
-        const unusedQuestions = this._controller.getUnusedQuestion(questions, idUserUsedQuestions)
-        const twelveQuestion = this._controller.getTwelveQuestions(unusedQuestions);
-        const updateIdUserUsedQuestions = this._controller.saveUserQuestionsId(twelveQuestion, idUserUsedQuestions);
-        this._model.updateIdUserUsedQuestions(body, updateIdUserUsedQuestions);
-
-        response.json(twelveQuestion);
-        response.end();
-    };
-
     onAddUser = (request, response) => {
         const { body } = request;
         const isAddedNewUser = this._model.addUser(body); //переместить логику в контроллер
@@ -82,6 +114,7 @@ class App {
     onCheckUser = (request, response) => {
         const { body } = request;
         const check = this._model.isRegisteredUser(body);
+        console.log(`IS REGISTERED USER:${body.phoneNumber}`, check);
 
         response.json(check);
         response.end();
@@ -89,7 +122,7 @@ class App {
 
     addNewQuestion = async (request, response) => {
         const { body } = request;
-        const normalizeQuestions = await this._fs.readCurrentQuestions(JSON.stringify(body));
+        const normalizeQuestions = await this._fs.readCurrentQuestions(body);
 
         const isCreateFile = this._fs.createFile(normalizeQuestions);
 

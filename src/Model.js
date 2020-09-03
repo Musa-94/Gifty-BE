@@ -1,25 +1,59 @@
 class Model {
     constructor() {
         this.regUsers = [];
+        this.adminCredentials = {
+            login: 'Gifty',
+            password: 'gift123'
+        }
+    };
+
+    checkValidAdminCredential({ login, password }) {
+        return this.adminCredentials.login === login && this.adminCredentials.password === password;
+    };
+
+    getUserHistoryScore(userPhoneNumber) {
+        const { historyScore } = this.findUserByPhoneNumber(userPhoneNumber);
+
+        return historyScore;
     }
 
     addUser(user) {
         return this.checkUserInformation(user)
             && !this.isRegisteredUser(user)
-                && !!this.regUsers.push(user)
-    }
+                && this.regUsers.push(user);
+    };
 
     isRegisteredUser(currentUser) {
-        return this.regUsers.find(user => currentUser.phoneNumber === user.phoneNumber);
-    }
+        return this.findUserByPhoneNumber(currentUser);
+    };
 
     getUserUsedQuestions(currentUser) {
-        return this.regUsers.find(user => currentUser.phoneNumber === user.phoneNumber).idUsedQuestions;
-    }
+        const { idUsedQuestions } = this.findUserByPhoneNumber(currentUser);
+
+        return idUsedQuestions;
+    };
 
     checkUserInformation(currentUser) {
-        return !!currentUser.phoneNumber;
-    }
+        if (!currentUser) {
+            console.log('NOT INFORMATION BY CURRENT USER');
+
+            return;
+        }
+
+        return currentUser.phoneNumber && currentUser.idUsedQuestions && currentUser.historyScore;
+    };
+
+    findUserByPhoneNumber({ phoneNumber }) {
+        return this.regUsers.find(user => phoneNumber === user.phoneNumber);
+    };
+
+    updateHistoryScore({ todayHistoryScore, phoneNumber }) {
+        const user = this.findUserByPhoneNumber({ phoneNumber });
+        const { historyScore } = user;
+
+        historyScore.push(todayHistoryScore);
+        console.log('historyScore', historyScore);
+    };
 
     updateIdUserUsedQuestions(currentUser, idUserUsedQuestions) {
         this.regUsers.forEach((user, index) => {
@@ -30,11 +64,11 @@ class Model {
                 return;
             }
         });
-    }
+    };
 
     getAllUsers() {
         return this.regUsers;
-    }
+    };
 }
 
 module.exports = Model;
