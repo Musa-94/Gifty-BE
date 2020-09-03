@@ -11478,18 +11478,21 @@ var Wrapper = /*#__PURE__*/styled_components_browser_esm["a" /* default */].div.
 Wrapper.ButtonContainer = styled_components_browser_esm["a" /* default */].div.withConfig({
   componentId: "f5iouk-4"
 })(["width:80%;height:40px;margin:50px auto;outline:none;border:none;@media (max-width:450px){height:30px;}"]);
-var Questions = /*#__PURE__*/styled_components_browser_esm["a" /* default */].div.withConfig({
+Wrapper.InputContainer = styled_components_browser_esm["a" /* default */].div.withConfig({
   componentId: "f5iouk-5"
+})(["width:100%;height:40px;display:flex;justify-content:center;align-items:center;margin-top:20px;outline:none;border:none;@media (max-width:450px){height:30px;}"]);
+var Questions = /*#__PURE__*/styled_components_browser_esm["a" /* default */].div.withConfig({
+  componentId: "f5iouk-6"
 })(["width:600px;height:540px;padding:10px;box-shadow:17px 16px 4em;margin:10px;box-sizing:border-box;@media (max-width:450px){width:320px;}"]);
 Questions.container = styled_components_browser_esm["a" /* default */].div.withConfig({
-  componentId: "f5iouk-6"
+  componentId: "f5iouk-7"
 })(["width:100%;height:85%;box-sizing:border-box;overflow:auto;"]);
 var Button = /*#__PURE__*/styled_components_browser_esm["a" /* default */].div.withConfig({
-  componentId: "f5iouk-7"
+  componentId: "f5iouk-8"
 })(["width:80%;height:40px"]);
 Button.save = Button;
 Questions.Button = styled_components_browser_esm["a" /* default */].div.withConfig({
-  componentId: "f5iouk-8"
+  componentId: "f5iouk-9"
 })(["width:100%;height:15%;display:flex;align-items:center;justify-content:center;box-sizing:border-box;"]);
 // CONCATENATED MODULE: ./src/theme/index.js
 var giftGif = __webpack_require__(34)["default"];
@@ -11498,13 +11501,13 @@ var backgroundImg = __webpack_require__(35)["default"];
 
 var styledComponents_Wrapper = /*#__PURE__*/styled_components_browser_esm["a" /* default */].div.withConfig({
   componentId: "p9gfn9-0"
-})(["margin:30px auto;outline:none;border:none;height:40px;width:80%;@media (max-width:450px){height:30px;margin:25px auto;}"]);
+})(["outline:none;border:none;width:80%;@media (max-width:450px){height:30px;}"]);
 styledComponents_Wrapper.title = styled_components_browser_esm["a" /* default */].span.withConfig({
   componentId: "p9gfn9-1"
 })(["margin-top:15px;font-size:20px;color:white;background-color:#EFA830;"]);
 styledComponents_Wrapper.input = styled_components_browser_esm["a" /* default */].input.withConfig({
   componentId: "p9gfn9-2"
-})(["box-sizing:border-box;outline:none;height:100%;width:100%;font-size:25px;background:transparent;border:none;border-bottom:1px solid black;color:white;"]);
+})(["box-sizing:border-box;outline:none;height:100%;width:100%;font-size:25px;background:transparent;border:none;border-bottom:1px solid black;color:#F74B4B;"]);
 // CONCATENATED MODULE: ./src/pages/adminPanel/components/adminPanelInput/AdminPanelInput.jsx
 
 
@@ -11644,12 +11647,13 @@ var AdminPanel_AdminPanel = function AdminPanel(props) {
   var onSaveQuestion = Object(react["useCallback"])(function () {
     createQuestion(questionData);
     setQuestionData({
-      imgUrl: '',
+      question: '',
       answerA: '',
       answerB: '',
       answerC: '',
       answerD: '',
-      question: ''
+      answerRight: '',
+      imgUrl: ''
     });
   });
   var onSendToServerQuestions = Object(react["useCallback"])(function () {
@@ -11663,49 +11667,56 @@ var AdminPanel_AdminPanel = function AdminPanel(props) {
     "data-at": 'overlay_background'
   }), /*#__PURE__*/react_default.a.createElement(Container, null, /*#__PURE__*/react_default.a.createElement(Wrapper, {
     "data-at": 'admin-panel_wrapper'
-  }, /*#__PURE__*/react_default.a.createElement(adminPanelInput_AdminPanelInput, {
+  }, /*#__PURE__*/react_default.a.createElement(Wrapper.InputContainer, null, /*#__PURE__*/react_default.a.createElement(adminPanelInput_AdminPanelInput, {
     name: inputsByQuestions.question.id,
     value: questionData.question,
     title: inputsByQuestions.question.title,
     onChange: function onChange(e) {
       return handleData(e, 'question');
     }
-  }), /*#__PURE__*/react_default.a.createElement(adminPanelInput_AdminPanelInput, {
+  })), /*#__PURE__*/react_default.a.createElement(Wrapper.InputContainer, null, /*#__PURE__*/react_default.a.createElement(adminPanelInput_AdminPanelInput, {
     name: inputsByQuestions.answerA.id,
     value: questionData.answerA,
     title: inputsByQuestions.answerA.title,
     onChange: function onChange(e) {
       return handleData(e, 'answerA');
     }
-  }), /*#__PURE__*/react_default.a.createElement(adminPanelInput_AdminPanelInput, {
+  })), /*#__PURE__*/react_default.a.createElement(Wrapper.InputContainer, null, /*#__PURE__*/react_default.a.createElement(adminPanelInput_AdminPanelInput, {
     name: inputsByQuestions.answerB.id,
     value: questionData.answerB,
     title: inputsByQuestions.answerB.title,
     onChange: function onChange(e) {
       return handleData(e, 'answerB');
     }
-  }), /*#__PURE__*/react_default.a.createElement(adminPanelInput_AdminPanelInput, {
+  })), /*#__PURE__*/react_default.a.createElement(Wrapper.InputContainer, null, /*#__PURE__*/react_default.a.createElement(adminPanelInput_AdminPanelInput, {
     name: inputsByQuestions.answerC.id,
     value: questionData.answerC,
     title: inputsByQuestions.answerC.title,
     onChange: function onChange(e) {
       return handleData(e, 'answerC');
     }
-  }), /*#__PURE__*/react_default.a.createElement(adminPanelInput_AdminPanelInput, {
+  })), /*#__PURE__*/react_default.a.createElement(Wrapper.InputContainer, null, /*#__PURE__*/react_default.a.createElement(adminPanelInput_AdminPanelInput, {
     name: inputsByQuestions.answerD.id,
     value: questionData.answerD,
     title: inputsByQuestions.answerD.title,
     onChange: function onChange(e) {
       return handleData(e, 'answerD');
     }
-  }), /*#__PURE__*/react_default.a.createElement(adminPanelInput_AdminPanelInput, {
+  })), /*#__PURE__*/react_default.a.createElement(Wrapper.InputContainer, null, /*#__PURE__*/react_default.a.createElement(adminPanelInput_AdminPanelInput, {
+    name: inputsByQuestions.answerRight.id,
+    value: questionData.answerRight,
+    title: inputsByQuestions.answerRight.title,
+    onChange: function onChange(e) {
+      return handleData(e, 'answerRight');
+    }
+  })), /*#__PURE__*/react_default.a.createElement(Wrapper.InputContainer, null, /*#__PURE__*/react_default.a.createElement(adminPanelInput_AdminPanelInput, {
     name: inputsByQuestions.imgUrl.id,
     value: questionData.imgUrl,
     title: inputsByQuestions.imgUrl.title,
     onChange: function onChange(e) {
       return handleData(e, 'imgUrl');
     }
-  }), /*#__PURE__*/react_default.a.createElement(Wrapper.ButtonContainer, null, /*#__PURE__*/react_default.a.createElement(adminPanelButton, {
+  })), /*#__PURE__*/react_default.a.createElement(Wrapper.ButtonContainer, null, /*#__PURE__*/react_default.a.createElement(adminPanelButton, {
     title: save,
     callback: onSaveQuestion
   }))), /*#__PURE__*/react_default.a.createElement(Questions, null, /*#__PURE__*/react_default.a.createElement(Questions.container, null, questions.length ? questions.map(function (question, index) {
