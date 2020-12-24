@@ -4,7 +4,7 @@ const express = require('express');
 const Model = require('./Model');
 const Controller = require('./Controller');
 const Nodemailer = require('./libs/sendMail/sendMail');
-const fileSystem = require(path.resolve(__dirname, './libs/fileSystem/fileSystem'));
+const FileSystem = require('./libs/fileSystem/fileSystem');
 
 class App {
     constructor() {
@@ -14,8 +14,10 @@ class App {
 
         this._model = new Model();
         this._controller = new Controller(this._model);
-        this._fs = new fileSystem();
+        this._fs = new FileSystem();
         this._mailer = new Nodemailer();
+
+        this._app.use(this.headerCors);
 
         this._app.get('/getUsers', this.onGetAllUsers);
         this._app.get('/getQuestions', this.onGetQuestions);
@@ -28,6 +30,13 @@ class App {
         this._app.post('/getTwelveQuestions', this.onGetTwelveQuestions);
         this._app.post('/admin/addNewQuestion', this.addNewQuestion);
         this._app.put('/updateHistoryScore', this.updateHistoryScore);
+    }
+
+    headerCors = (req, res, next) => {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        next();
     }
 
     onCheckAdminCredentials = (req, res) => {
@@ -122,11 +131,17 @@ class App {
 
     addNewQuestion = async (request, response) => {
         const { body } = request;
-        const normalizeQuestions = await this._fs.readCurrentQuestions(body);
 
-        const isCreateFile = this._fs.createFile(normalizeQuestions);
+        try {
+            const normalizeQuestions = await this._fs.readCurrentQuestions(body);
 
-        response.json(isCreateFile);
+            const isCreateFile = this._fs.createFile(normalizeQuestions);
+
+            response.json(isCreateFile);
+        } catch (e) {
+            console.log('Error:', e);
+        }
+
         response.end();
     };
 
