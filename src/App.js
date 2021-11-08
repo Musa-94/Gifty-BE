@@ -32,7 +32,7 @@ class App {
         this._app.post('/admin/addNewQuestion', this.addNewQuestion);
         this._app.put('/updateHistoryScore', this.updateHistoryScore);
 
-        this._app.post('/convert', this.handleConvert)
+        this._app.get('/convert', this.handleConvert)
     }
 
     headerCors = (req, res, next) => {
@@ -160,14 +160,14 @@ class App {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ to: body.to, from: body.from, amount: body.amount, promocode: '' })
-            }).then(res => res)
+            }).then(res => res.json())
 
             console.log('*************response**************', response)
             if (response.amount) {
                 console.log('response', response.amount)
             }
 
-            res.status(200).json(response)
+            res.status(200).send(response)
         } catch (e) {
             console.log('EERRRORRRR', e)
         }
