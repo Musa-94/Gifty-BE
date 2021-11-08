@@ -32,7 +32,7 @@ class App {
         this._app.post('/admin/addNewQuestion', this.addNewQuestion);
         this._app.put('/updateHistoryScore', this.updateHistoryScore);
 
-        this._app.get('/convert', this.handleConvert)
+        this._app.post('/convert', this.handleConvert)
     }
 
     headerCors = (req, res, next) => {
