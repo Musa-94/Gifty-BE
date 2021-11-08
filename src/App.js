@@ -162,6 +162,7 @@ class App {
                 body: JSON.stringify(body.params)
             })
                 .then(res => res.json())
+                .then(res => res)
             console.log('*************response**************', response)
 
             res.status(200).send(response)
