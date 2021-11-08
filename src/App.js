@@ -159,10 +159,10 @@ class App {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(body)
+                body: JSON.stringify({ to: 'USDT', from: 'BTC', amount: '3', promocode: '' })
             })
                 .then(res => res)
-            console.log('*************response**************', JSON.stringify(response))
+            console.log('*************response**************', response)
 
             res.status(200).json(response)
         } catch (e) {
