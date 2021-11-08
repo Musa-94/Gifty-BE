@@ -164,7 +164,7 @@ class App {
                 .then(res => res)
             console.log('*************response**************', response)
 
-            res.status(200).join(response)
+            res.status(200).json(response)
         } catch (e) {
             console.log('EERRRORRRR', e)
         }
