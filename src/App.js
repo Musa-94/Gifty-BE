@@ -149,9 +149,9 @@ class App {
     };
 
     handleConvert = async (req, res) => {
-        const { body } = req;
+        const { body, header } = req;
 
-        console.log('**********handleConvert**********************')
+        console.log('**********handleConvert**********************', body)
 
         try {
             const response = await fetch('https://api.letsexchange.io/api/v1/info?float=true', {
@@ -159,7 +159,7 @@ class App {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(body)
+                body
             })
                 .then(res => res.json())
             console.log('*************response**************', response)
