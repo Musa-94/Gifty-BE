@@ -161,8 +161,8 @@ class App {
                 },
                 body: JSON.stringify({ to: 'USDT', from: 'BTC', amount: '3', promocode: '' })
             })
-                .then(res => res)
-            console.log('*************response**************', response)
+
+            console.log('*************response**************', JSON.parse(response))
 
             res.status(200).json(response)
         } catch (e) {
