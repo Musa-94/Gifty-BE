@@ -159,12 +159,12 @@ class App {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body
+                body: JSON.stringify(body)
             })
                 .then(res => res)
             console.log('*************response**************', JSON.stringify(response))
 
-            res.status(200).send(response)
+            res.status(200).json(response)
         } catch (e) {
             console.log('EERRRORRRR', e)
         }
