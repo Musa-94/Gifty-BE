@@ -32,7 +32,7 @@ class App {
         this._app.post('/admin/addNewQuestion', this.addNewQuestion);
         this._app.put('/updateHistoryScore', this.updateHistoryScore);
 
-        this._app.post('/convert', this.handleConvert)
+        this._app.get('/convert', this.handleConvert)
     }
 
     headerCors = (req, res, next) => {
@@ -151,18 +151,22 @@ class App {
     handleConvert = async (req, res) => {
         const { body } = req;
 
+        console.log('**********handleConvert**********************')
+
         try {
-            const response = fetch('https://api.letsexchange.io/api/v1/info?float=true', {
+            const response = await fetch('https://api.letsexchange.io/api/v1/info?float=true', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(body)
             })
-            console.log('response', response)
+                .then(res => res.json())
+            console.log('*************response**************', response)
+
             res.status(200).join(response)
         } catch (e) {
-            res.status(400)
+            console.log('EERRRORRRR')
         }
 
     }
