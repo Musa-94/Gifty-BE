@@ -149,7 +149,7 @@ class App {
     };
 
     handleConvert = async (req, res) => {
-        const { body, header } = req;
+        const { body } = req;
 
         console.log('**********handleConvert**********************', body)
 
@@ -159,10 +159,10 @@ class App {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(body.params)
+                body
             })
                 .then(res => res)
-            console.log('*************response**************', response.json())
+            console.log('*************response**************', response)
 
             res.status(200).send(response)
         } catch (e) {
