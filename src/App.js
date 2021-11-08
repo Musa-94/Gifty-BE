@@ -5,7 +5,7 @@ const Model = require('./Model');
 const Controller = require('./Controller');
 const Nodemailer = require('./libs/sendMail/sendMail');
 const FileSystem = require('./libs/fileSystem/fileSystem');
-import fetch from 'node-fetch';
+const fetch = require('node-fetch');
 
 class App {
     constructor() {
