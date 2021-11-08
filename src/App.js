@@ -5,7 +5,7 @@ const Model = require('./Model');
 const Controller = require('./Controller');
 const Nodemailer = require('./libs/sendMail/sendMail');
 const FileSystem = require('./libs/fileSystem/fileSystem');
-const {post} = require("axios");
+import fetch from 'node-fetch';
 
 class App {
     constructor() {
@@ -152,7 +152,13 @@ class App {
         const { body } = req;
 
         try {
-            const response = post('https://api.letsexchange.io/api/v1/info?float=true', { body })
+            const response = fetch('https://api.letsexchange.io/api/v1/info?float=true', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body)
+            })
             console.log('response', response)
             res.status(200).join(response)
         } catch (e) {
