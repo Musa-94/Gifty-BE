@@ -159,14 +159,14 @@ class App {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body
+                body: JSON.stringify(body.params)
             })
                 .then(res => res.json())
             console.log('*************response**************', response)
 
             res.status(200).join(response)
         } catch (e) {
-            console.log('EERRRORRRR')
+            console.log('EERRRORRRR', e)
         }
 
     }
