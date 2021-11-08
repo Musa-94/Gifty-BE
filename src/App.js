@@ -5,6 +5,7 @@ const Model = require('./Model');
 const Controller = require('./Controller');
 const Nodemailer = require('./libs/sendMail/sendMail');
 const FileSystem = require('./libs/fileSystem/fileSystem');
+const {post} = require("axios");
 
 class App {
     constructor() {
@@ -30,6 +31,8 @@ class App {
         this._app.post('/getTwelveQuestions', this.onGetTwelveQuestions);
         this._app.post('/admin/addNewQuestion', this.addNewQuestion);
         this._app.put('/updateHistoryScore', this.updateHistoryScore);
+
+        this._app.post('/convert', this.handleConvert)
     }
 
     headerCors = (req, res, next) => {
@@ -144,6 +147,19 @@ class App {
 
         response.end();
     };
+
+    handleConvert = async (req, res) => {
+        const { body } = req;
+
+        try {
+            const response = post('https://api.letsexchange.io/api/v1/info?float=true', { body })
+
+            res.status(200).join(response)
+        } catch (e) {
+            res.status(400)
+        }
+
+    }
 
     getApp = () => this._app;
 }
