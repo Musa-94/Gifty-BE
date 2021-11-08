@@ -153,7 +153,7 @@ class App {
 
         try {
             const response = post('https://api.letsexchange.io/api/v1/info?float=true', { body })
-
+            console.log('response', response)
             res.status(200).join(response)
         } catch (e) {
             res.status(400)
